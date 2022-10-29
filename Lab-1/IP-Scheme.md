@@ -1,4 +1,4 @@
-# OSPF
+# IP Scheme
 Собрана топология согласно схеме:
 
 <img width="1273" alt="image" src="https://user-images.githubusercontent.com/116812447/198835504-1fe213ce-cbaf-4283-a56a-c33336ad461c.png">
