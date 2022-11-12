@@ -78,3 +78,50 @@ IP Route Table for VRF "default"
 10.10.1.5/32, ubest/mbest: 1/0
     *via 10.1.1.10, Eth1/3, [110/41], 2d17h, ospf-underlay, intra
 ```
+Пинг доходит до всех устройств:
+```
+spine-1# ping 10.10.1.3
+PING 10.10.1.3 (10.10.1.3): 56 data bytes
+64 bytes from 10.10.1.3: icmp_seq=0 ttl=254 time=9.393 ms
+64 bytes from 10.10.1.3: icmp_seq=1 ttl=254 time=3.052 ms
+64 bytes from 10.10.1.3: icmp_seq=2 ttl=254 time=2.827 ms
+64 bytes from 10.10.1.3: icmp_seq=3 ttl=254 time=4.52 ms
+64 bytes from 10.10.1.3: icmp_seq=4 ttl=254 time=2.83 ms
+
+--- 10.10.1.3 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 2.827/4.524/9.393 ms
+spine-1# ping 10.10.1.4
+PING 10.10.1.4 (10.10.1.4): 56 data bytes
+64 bytes from 10.10.1.4: icmp_seq=0 ttl=254 time=5.936 ms
+64 bytes from 10.10.1.4: icmp_seq=1 ttl=254 time=4.271 ms
+64 bytes from 10.10.1.4: icmp_seq=2 ttl=254 time=2.682 ms
+64 bytes from 10.10.1.4: icmp_seq=3 ttl=254 time=3.095 ms
+64 bytes from 10.10.1.4: icmp_seq=4 ttl=254 time=2.186 ms
+
+--- 10.10.1.4 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 2.186/3.634/5.936 ms
+spine-1# ping 10.10.1.5
+PING 10.10.1.5 (10.10.1.5): 56 data bytes
+64 bytes from 10.10.1.5: icmp_seq=0 ttl=254 time=8.018 ms
+64 bytes from 10.10.1.5: icmp_seq=1 ttl=254 time=3.747 ms
+64 bytes from 10.10.1.5: icmp_seq=2 ttl=254 time=4.168 ms
+64 bytes from 10.10.1.5: icmp_seq=3 ttl=254 time=3.899 ms
+64 bytes from 10.10.1.5: icmp_seq=4 ttl=254 time=4.968 ms
+
+--- 10.10.1.5 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 3.747/4.96/8.018 ms
+spine-1# ping 10.10.1.2
+PING 10.10.1.2 (10.10.1.2): 56 data bytes
+64 bytes from 10.10.1.2: icmp_seq=0 ttl=253 time=8.002 ms
+64 bytes from 10.10.1.2: icmp_seq=1 ttl=253 time=5.761 ms
+64 bytes from 10.10.1.2: icmp_seq=2 ttl=253 time=6.41 ms
+64 bytes from 10.10.1.2: icmp_seq=3 ttl=253 time=4.029 ms
+64 bytes from 10.10.1.2: icmp_seq=4 ttl=253 time=4.033 ms
+
+--- 10.10.1.2 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 4.029/5.646/8.002 ms
+```
