@@ -24,4 +24,9 @@ interface Ethernet1/1
 interface Ethernet1/2
   ip router isis isis
 ```
+Конфиги для других устройств аналогичны.
 
+Все loopback доступны с leaf-1
+```
+
+```
