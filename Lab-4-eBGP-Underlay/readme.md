@@ -2,6 +2,7 @@
  - Router-Id - настроен вручную, такой же как Underlay Loopback
  - Таймеры - Hello и Hold - 3 и 9 секунд соотвественно
  - address-family ipv4 unicast
+ - Распространяются только маршруты до Loopback на лифах
 
 ## Схема сети
 
