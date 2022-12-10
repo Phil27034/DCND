@@ -1,5 +1,7 @@
 # Пострение Underlay сети на базе eBGP
-Router-Id - настроен вручную, такой же как Underlay Loopback
+ - Router-Id - настроен вручную, такой же как Underlay Loopback
+ - Таймеры - Hello и Hold - 3 и 9 секунд соотвественно
+ - address-family ipv4 unicast
 
 ## Схема сети
 
@@ -12,8 +14,11 @@ Router-Id - настроен вручную, такой же как Underlay Loo
  ```
  
  ## Конфиг Лифа-1
+ ```
+ ```
  
  ## Таблица маршрутизации Спайна-1
- 
+ ```
+ ```
  
  
