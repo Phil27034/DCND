@@ -1,4 +1,5 @@
 # Пострение Underlay сети на базе eBGP
+Router-Id - настроен вручную, такой же как Underlay Loopback
 
 ## Схема сети
 
