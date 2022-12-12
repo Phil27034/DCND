@@ -1,7 +1,7 @@
 # Пострение Underlay сети на базе eBGP
  - Router-Id - настроен вручную, такой же как Underlay Loopback
  - Таймеры - Hello и Hold - 3 и 9 секунд соотвественно
- - Reconnect таймер - 12 секунд
+ - Reconnect интервал - 12 секунд
  - address-family ipv4 unicast
  - Распространяются только маршруты до Loopback на лифах
 
