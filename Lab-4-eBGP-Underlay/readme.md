@@ -15,6 +15,29 @@
 
  ## Конфиг Спайна-1
  ```
+feature bgp
+
+router bgp 64600
+  router-id 10.10.1.1
+  bestpath as-path multipath-relax
+  reconnect-interval 12
+  address-family ipv4 unicast
+    maximum-paths 64
+  neighbor 10.1.1.2
+    remote-as 64701
+    description Leaf-1
+    timers 3 9
+    address-family ipv4 unicast
+  neighbor 10.1.1.6
+    remote-as 64702
+    description Leaf-2
+    timers 3 9
+    address-family ipv4 unicast
+  neighbor 10.1.1.10
+    remote-as 64703
+    description Leaf-3
+    timers 3 9
+    address-family ipv4 unicast
  ```
  
  ## Конфиг Лифа-1
