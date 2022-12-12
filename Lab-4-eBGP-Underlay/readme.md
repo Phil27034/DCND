@@ -64,7 +64,21 @@ router bgp 64701
  ```
  
  ## Таблица маршрутизации Спайна-1
+ Отображены маршруты до всех Loopback на всех Лифах
  ```
+ spine-1(config)# show ip route bgp
+IP Route Table for VRF "default"
+'*' denotes best ucast next-hop
+'**' denotes best mcast next-hop
+'[x/y]' denotes [preference/metric]
+'%<string>' in via output denotes VRF <string>
+
+10.10.1.3/32, ubest/mbest: 1/0
+    *via 10.1.1.2, [20/0], 00:31:01, bgp-64600, external, tag 64701
+10.10.1.4/32, ubest/mbest: 1/0
+    *via 10.1.1.6, [20/0], 00:24:55, bgp-64600, external, tag 64702
+10.10.1.5/32, ubest/mbest: 1/0
+    *via 10.1.1.10, [20/0], 00:02:48, bgp-64600, external, tag 64703
  ```
  
  
