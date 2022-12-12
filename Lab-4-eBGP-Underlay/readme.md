@@ -6,6 +6,7 @@
  - Распространяются только маршруты до Loopback на лифах
 
 ## Схема сети
+<img width="1142" alt="image" src="https://user-images.githubusercontent.com/116812447/207006848-f7a1c966-b143-4f34-abc3-816545c7e882.png">
 
 ## Нумерация автономных систем
 - Нумерация берется из Private Range
