@@ -120,7 +120,7 @@ Route Distinguisher: 10.10.2.4:100
 *>e[3]:[0]:[32]:[10.10.2.4]/88
                       10.10.2.4                                      0 64600 64702 i
  ```
-Таблица l2vpn маршрутов на leaf-2, представлены оба типа маршрутов 2 и :
+Таблица l2vpn маршрутов на leaf-2, представлены оба типа маршрутов 2 и 3:
 ```
 leaf-2# show bgp l2vpn evpn
 BGP routing table information for VRF default, address family L2VPN EVPN
