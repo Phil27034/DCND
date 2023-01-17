@@ -94,7 +94,7 @@ router bgp 64600
   set ip next-hop unchanged
 ```
 
-Таблица l2vpn маршрутов на leaf-1:
+Таблица l2vpn маршрутов на leaf-1, представлены оба типа маршрутов 2 и 3:
  ```
 leaf-1# show bgp l2vpn evpn
 BGP routing table information for VRF default, address family L2VPN EVPN
@@ -120,7 +120,7 @@ Route Distinguisher: 10.10.2.4:100
 *>e[3]:[0]:[32]:[10.10.2.4]/88
                       10.10.2.4                                      0 64600 64702 i
  ```
-Таблица l2vpn маршрутов на leaf-2:
+Таблица l2vpn маршрутов на leaf-2, представлены оба типа маршрутов 2 и :
 ```
 leaf-2# show bgp l2vpn evpn
 BGP routing table information for VRF default, address family L2VPN EVPN
@@ -147,7 +147,13 @@ Route Distinguisher: 10.10.2.4:100    (L2VNI 100)
                       10.10.2.4                         100      32768 i
 ```
 
-Пинг 192.168.1.2 > Leaf-1 > Leaf-2 > 192.168.1.3 работает:
+Пинг 192.168.1.3 > Leaf-2 > Leaf-1 > 192.168.1.2 работает:
 ```
+VPCS> ping 192.168.1.2
 
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=64 time=21.790 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=64 time=19.371 ms
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=64 time=19.969 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=64 time=19.421 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=64 time=18.218 ms
 ```
