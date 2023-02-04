@@ -60,19 +60,24 @@ Y: В порядке очереди
 
 ## Настройки Leaf-1
 ```
+#Виртуальный MAC
 fabric forwarding anycast-gateway-mac 0001.0002.0003
+
+#Сопоставление VLAN и MAC
 vlan 1,100,200
 vlan 100
   vn-segment 100
 vlan 200
   vn-segment 200
   
-  vrf context OTUS
+#Настройка IP VRF  
+vrf context OTUS
   rd 10.10.2.3:1000
   address-family ipv4 unicast
     route-target import 1000:1000 evpn
     route-target export 1000:1000 evpn
-    
+ 
+#Настройка VLAN интерфейсов и  nve интерфейса 
 interface Vlan100
   no shutdown
   vrf member OTUS
@@ -94,6 +99,7 @@ interface nve1
   member vni 200
     ingress-replication protocol bgp
 
+#Настройка физических интерфейсов и loopback
 interface Ethernet1/1
   no switchport
   ip address 10.1.1.2/30
@@ -108,6 +114,8 @@ interface Ethernet1/3
 interface loopback0
   ip address 10.10.2.3/32
   
+
+#Настройка BGP
 router bgp 64701
   router-id 10.10.2.3
   address-family ipv4 unicast
@@ -122,6 +130,8 @@ router bgp 64701
     address-family l2vpn evpn
       send-community
       send-community extended
+
+#Настройка MAC VRF 
 evpn
   vni 100 l2
     rd 10.10.2.3:100
@@ -131,5 +141,4 @@ evpn
     rd 10.10.2.3:200
     route-target import 200:200
     route-target export 200:200
-   
-```
+ ```
