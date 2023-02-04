@@ -72,11 +72,7 @@ vlan 200
   
 #Настройка IP VRF  
 vrf context OTUS
-  rd 10.10.2.3:1000
-  address-family ipv4 unicast
-    route-target import 1000:1000 evpn
-    route-target export 1000:1000 evpn
- 
+   
 #Настройка VLAN интерфейсов и  nve интерфейса 
 interface Vlan100
   no shutdown
@@ -96,8 +92,10 @@ interface nve1
   source-interface loopback0
   member vni 100
     ingress-replication protocol bgp
+    suppress arp
   member vni 200
     ingress-replication protocol bgp
+    suppress arp
 
 #Настройка физических интерфейсов и loopback
 interface Ethernet1/1
