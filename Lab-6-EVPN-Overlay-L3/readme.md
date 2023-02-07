@@ -1,4 +1,6 @@
 # Настройка VxLAN EVPN L3
+Задание решено двумя способами: симметричным и ассиметричным.  
+Полные конфиги устройств с симметричным подходом выложены отдельно в текущей папке.
 
 ## Задание
 Настроить маршрутизацию в рамках Overlay между клиентами: assymetric и symmetric подходами
@@ -58,7 +60,7 @@ Y: В порядке очереди
 - Спайны - 64600
 - Лифы - 64701-64703
 
-## Настройки Leaf-1
+## Настройки Leaf-1 для ассиметричного подхода
 ```
 #Виртуальный MAC
 fabric forwarding anycast-gateway-mac 0001.0002.0003
@@ -78,25 +80,21 @@ interface Vlan100
   no shutdown
   vrf member OTUS
   ip address 192.168.1.1/24
-  fabric forwarding mode anycast-gateway
-
+  
 interface Vlan200
   no shutdown
   vrf member OTUS
   ip address 192.168.2.1/24
-  fabric forwarding mode anycast-gateway
-
+  
 interface nve1
   no shutdown
   host-reachability protocol bgp
   source-interface loopback0
   member vni 100
     ingress-replication protocol bgp
-    suppress arp
   member vni 200
     ingress-replication protocol bgp
-    suppress arp
-
+    
 #Настройка физических интерфейсов и loopback
 interface Ethernet1/1
   no switchport
@@ -139,4 +137,67 @@ evpn
     rd 10.10.2.3:200
     route-target import 200:200
     route-target export 200:200
+ ```
+ 
+ ## Настройки Spine - одинаковые для обоих подходов - здесь настраивается только BGP - для underlay и overlay
+ ```
+ interface loopback0
+  ip address 10.10.2.1/32
+  
+route-map SET_NEXT_HOP_UNCHANGED permit 10
+  set ip next-hop unchanged
+  
+  router bgp 64600
+  router-id 10.10.2.1
+  address-family ipv4 unicast
+    network 10.10.2.1/32
+  address-family l2vpn evpn
+    retain route-target all
+  neighbor 10.1.1.2
+    remote-as 64701
+    address-family ipv4 unicast
+  neighbor 10.1.1.6
+    remote-as 64702
+    address-family ipv4 unicast
+  neighbor 10.10.2.3
+    remote-as 64701
+    update-source loopback0
+    ebgp-multihop 2
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+      route-map SET_NEXT_HOP_UNCHANGED out
+  neighbor 10.10.2.4
+    remote-as 64702
+    update-source loopback0
+    ebgp-multihop 2
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+      route-map SET_NEXT_HOP_UNCHANGED out
+ ```
+ 
+ ## Проверка связи
+ Пинг с конечного узла R3 до всех остальных узлов:
+ ```
+ Router#ping 192.168.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 11/13/17 ms
+Router#ping 192.168.1.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 10/11/14 ms
+Router#ping 192.168.2.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.2.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 18/21/25 ms
+Router#ping 192.168.2.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.2.3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 15/24/37 ms
  ```
