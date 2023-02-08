@@ -64,6 +64,8 @@ Y: В порядке очереди
 ```
 #Виртуальный MAC
 fabric forwarding anycast-gateway-mac 0001.0002.0003
+hardware access-list tcam region racl 512
+hardware access-list tcam region arp-ether 256 double-wide
 
 #Сопоставление VLAN и MAC
 vlan 1,100,200
@@ -71,6 +73,8 @@ vlan 100
   vn-segment 100
 vlan 200
   vn-segment 200
+vlan 300
+  vn-segment 300
   
 #Настройка IP VRF  
 vrf context OTUS
@@ -80,14 +84,22 @@ interface Vlan100
   no shutdown
   vrf member OTUS
   ip address 192.168.1.1/24
+  fabric forwarding mode anycast-gateway
   
 interface Vlan200
   no shutdown
   vrf member OTUS
   ip address 192.168.2.1/24
+  fabric forwarding mode anycast-gateway
+  
+interface Vlan300
+  no shutdown
+  vrf member OTUS
+  ip forward
   
 interface nve1
   no shutdown
+  member vni 300 associate-vrf
   host-reachability protocol bgp
   source-interface loopback0
   member vni 100
@@ -175,6 +187,91 @@ route-map SET_NEXT_HOP_UNCHANGED permit 10
       send-community
       send-community extended
       route-map SET_NEXT_HOP_UNCHANGED out
+ ```
+ Настройка Leaf-1 для симметричного подхода
+ ```
+ #Виртуальный MAC
+fabric forwarding anycast-gateway-mac 0001.0002.0003
+
+#Сопоставление VLAN и MAC
+vlan 1,100,200
+vlan 100
+  vn-segment 100
+vlan 200
+  vn-segment 200
+  
+#Настройка IP VRF  
+vrf context OTUS
+  vni 300
+  rd 10.10.2.3:300
+  address-family ipv4 unicast
+    route-target import 300:300
+    route-target import 300:300 evpn
+    route-target export 300:300
+    route-target export 300:300 evpn
+    
+#Настройка VLAN интерфейсов и  nve интерфейса 
+interface Vlan100
+  no shutdown
+  vrf member OTUS
+  ip address 192.168.1.1/24
+  
+interface Vlan200
+  no shutdown
+  vrf member OTUS
+  ip address 192.168.2.1/24
+  
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback0
+  member vni 100
+    ingress-replication protocol bgp
+  member vni 200
+    ingress-replication protocol bgp
+    
+#Настройка физических интерфейсов и loopback
+interface Ethernet1/1
+  no switchport
+  ip address 10.1.1.2/30
+  no shutdown
+
+interface Ethernet1/2
+  switchport access vlan 100
+
+interface Ethernet1/3
+  switchport access vlan 200
+  
+interface loopback0
+  ip address 10.10.2.3/32
+  
+
+#Настройка BGP
+router bgp 64701
+  router-id 10.10.2.3
+  address-family ipv4 unicast
+    network 10.10.2.3/32
+  neighbor 10.1.1.1
+    remote-as 64600
+    address-family ipv4 unicast
+  neighbor 10.10.2.1
+    remote-as 64600
+    update-source loopback0
+    ebgp-multihop 2
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+
+#Настройка MAC VRF 
+evpn
+  vni 100 l2
+    rd 10.10.2.3:100
+    route-target import 100:100
+    route-target export 100:100
+  vni 200 l2
+    rd 10.10.2.3:200
+    route-target import 200:200
+    route-target export 200:200
  ```
  
  ## Проверка связи
