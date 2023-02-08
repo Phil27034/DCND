@@ -188,7 +188,7 @@ route-map SET_NEXT_HOP_UNCHANGED permit 10
       send-community extended
       route-map SET_NEXT_HOP_UNCHANGED out
  ```
- Настройка Leaf-1 для симметричного подхода
+ ## Настройка Leaf-1 для симметричного подхода
  ```
  #Виртуальный MAC
 fabric forwarding anycast-gateway-mac 0001.0002.0003
