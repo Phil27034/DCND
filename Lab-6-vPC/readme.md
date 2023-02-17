@@ -50,6 +50,21 @@ interface port-channel101
   ip address 172.16.16.2/30
   no shutdown
 
-#Включение VPC для peer keep alive
+#Включение VRF VPC для peer keep alive
 vrf context VPC
+
+#Интерфейс подключаемый к конечному узлу
+interface Ethernet1/2
+  switchport access vlan 100
+  channel-group 101 mode active
+  
+ #Интерфейс для peer link
+ interface Ethernet1/6
+  switchport mode trunk
+  channel-group 1 mode active
+  
+#Второй интерфейс для peerlink
+interface Ethernet1/5
+  switchport mode trunk
+  channel-group 1 mode active
 ```
