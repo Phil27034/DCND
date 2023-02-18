@@ -190,3 +190,22 @@ PING 192.168.2.3 (192.168.2.3): 56 data bytes
 5 packets transmitted, 5 packets received, 0.00% packet loss
 round-trip min/avg/max = 19.934/23.986/29.598 ms
 ```
+
+## Проверка маршрутов на Leaf-2
+Все MAC адреса видны за Anycast VTEP
+```
+switch# show l2route mac all
+
+Flags -(Rmac):Router MAC (Stt):Static (L):Local (R):Remote (V):vPC link
+(Dup):Duplicate (Spl):Split (Rcv):Recv (AD):Auto-Delete (D):Del Pending
+(S):Stale (C):Clear, (Ps):Peer Sync (O):Re-Originated (Nho):NH-Override
+(Pf):Permanently-Frozen, (Orp): Orphan
+
+Topology    Mac Address    Prod   Flags         Seq No     Next-Hops
+----------- -------------- ------ ------------- ---------- ---------------------------------------
+100         5009.0000.1b08 BGP    SplRcv        0          10.10.2.6 (Label: 100)
+100         aabb.cc00.6000 Local  L,            0          Eth1/2
+200         aabb.cc00.4000 BGP    SplRcv        0          10.10.2.6 (Label: 200)
+200         aabb.cc00.7000 Local  L,            0          Eth1/3
+300         5002.0000.1b08 VXLAN  Rmac          0          10.10.2.6
+```
