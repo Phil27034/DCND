@@ -1,5 +1,4 @@
 # Настройка vPC
-Полные конфиги всех устройств представлены в папке задания.
 
 ## Схема
 <img width="1366" alt="image" src="https://user-images.githubusercontent.com/116812447/219690642-19d22a0b-c3c1-4cc0-9c83-032477724f94.png">
