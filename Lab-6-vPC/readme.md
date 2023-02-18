@@ -17,6 +17,7 @@ vpc domain 8
   #Настройка peer keep alive link
   peer-keepalive destination 172.16.16.1 source 172.16.16.2 vrf VPC
   
+  #Задержка поднятия vPC после перезагрузки устройства
   delay restore 10
   
   #Включение Peer gateway - резервный узел может маршрутизировать пакеты предназначенные основному узлу
