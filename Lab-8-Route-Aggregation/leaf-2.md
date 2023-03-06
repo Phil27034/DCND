@@ -1,5 +1,4 @@
-show run
-
+```
 !Command: show running-config
 !Running configuration last done at: Sun Mar  5 14:35:15 2023
 !Time: Sun Mar  5 19:38:30 2023
@@ -289,6 +288,4 @@ evpn
     route-target export 600:600
 
 no logging console
-
-
-leaf-2# 
+```
