@@ -1,5 +1,4 @@
-show run
-
+```
 !Command: show running-config
 !Running configuration last done at: Sun Mar  5 14:40:33 2023
 !Time: Sun Mar  5 19:43:06 2023
@@ -271,6 +270,4 @@ router bgp 64703
       address-family ipv4 unicast
 
 no logging console
-
-
-border-leaf# 
+```
