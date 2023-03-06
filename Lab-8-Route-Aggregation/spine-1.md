@@ -1,4 +1,6 @@
-show run
+```
+show run
+
 
 !Command: show running-config
 !Running configuration last done at: Sun Feb 26 15:38:08 2023
@@ -240,4 +242,7 @@ router bgp 64600
 no logging console
 
 
-spine-1# 
+
+spine-1# 
+
+```
