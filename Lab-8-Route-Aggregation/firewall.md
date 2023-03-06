@@ -1,3 +1,4 @@
+```
 show run
 Building configuration...
 
@@ -131,3 +132,4 @@ line vty 0 4
 end
 
 firewall#
+```
