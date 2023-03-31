@@ -1,4 +1,4 @@
-show rub n
+show run
 Building configuration...
 
 Current configuration : 2793 bytes
