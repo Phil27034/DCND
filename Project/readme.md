@@ -462,13 +462,7 @@ Route Distinguisher: 10.10.2.4:500    (L3VNI 500)
 *>e[5]:[0]:[0]:[32]:[2.1.1.1]/224
                       10.10.1.6                                      0 64600 64703 ?
 
-leaf-2#
-leaf-2#
-leaf-2#
-leaf-2#
-leaf-2#
-leaf-2#
-leaf-2#
+
 ```
 
 ## Связь с Firewall
@@ -542,6 +536,8 @@ interface Ethernet0/0.3
  ip nat outside
  ip virtual-reassembly in
 
+interface Ethernet0/3
+ ip address 4.4.4.1 255.255.255.252
 
  router bgp 64800
  bgp log-neighbor-changes
@@ -551,6 +547,10 @@ interface Ethernet0/0.3
  network 159.33.0.0 mask 255.255.255.0
  neighbor 3.3.3.2 remote-as 10000
  neighbor 3.3.3.2 route-map BLOCK_INTERNAL out
+ neighbor 3.3.3.2 route-map BLOCK_ISP in
+ neighbor 4.4.4.2 remote-as 11000
+ neighbor 4.4.4.2 route-map BLOCK_ISP in
+ neighbor 4.4.4.2 route-map BLOCK_INTERNAL out
  neighbor 192.168.5.1 remote-as 64705
  neighbor 192.168.5.1 default-originate
  neighbor 192.168.5.1 route-map BLOCK_EXTERNAL out
@@ -566,6 +566,7 @@ ip route 159.33.0.0 255.255.255.0 192.168.5.1
 !
 ip prefix-list BLOCK_EXTERNAL seq 10 deny 159.33.0.0/24
 ip prefix-list BLOCK_EXTERNAL seq 20 permit 0.0.0.0/0 le 32
+ip prefix-list BLOCK_ISP seq 10 deny 0.0.0.0/0 le 32
 !
 ip prefix-list BLOCK_INTERNAL seq 25 permit 159.33.0.0/24
 access-list 1 deny   159.33.0.0 0.0.0.255
@@ -578,6 +579,9 @@ route-map BLOCK_EXTERNAL permit 10
 route-map BLOCK_INTERNAL permit 10
  match ip address prefix-list BLOCK_INTERNAL
 
+route-map BLOCK_ISP permit 10
+ match ip address prefix-list BLOCK_ISP
+ 
 ```
 
 ## Связь с Интернетом
